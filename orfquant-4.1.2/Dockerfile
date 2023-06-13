@@ -1,26 +1,8 @@
-FROM ubuntu:latest
-
-WORKDIR /usr/src
-
-RUN apt-get -qq update && apt-get -y upgrade \
-	&& apt-get install -y python3-pip python3-dev build-essential \
-    && apt install -y python3.10-venv \
-    && apt-get install -y wget zip default-jre \
-    && apt-get clean \
-    && apt-get purge \
-    && export LC_ALL=en_US.UTF-8 \
-    && export LANG=en_US.UTF-8 \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-RUN wget https://github.com/jgm/pandoc/releases/download/3.1.3/pandoc-3.1.3-linux-amd64.tar.gz -O pandoc.tar.gz && \
-   tar -xvfz pandoc.tar.gz && \
-   rm pandoc.tar.gz
-
 FROM rocker/r-ver:4.1.2
 
 RUN apt-get update \
   && apt-get install --no-install-recommends -y \
-    build-essential \ 
+    build-essential wget \ 
     libcurl4-gnutls-dev \
     libxml2-dev \
     libssl-dev \
@@ -34,7 +16,11 @@ RUN apt-get update \
     libjpeg-dev \
     libpng-dev \
     libxml2-dev \
-    libglpk-dev
+    libglpk-dev \
+    && wget https://github.com/jgm/pandoc/releases/download/2.11.4/pandoc-2.11.4-linux-amd64.tar.gz \
+    && mkdir '/usr/src/pandoc' \
+	  && tar xvzf pandoc-2.11.4-linux-amd64.tar.gz --strip-components 1 -C '/usr/src/pandoc' \
+	  && rm pandoc-2.11.4-linux-amd64.tar.gz
 
 RUN R -e "install.packages('remotes');" \
   && R -e "install.packages('BiocManager')" \
