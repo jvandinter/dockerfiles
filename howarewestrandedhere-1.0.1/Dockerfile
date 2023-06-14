@@ -13,6 +13,7 @@ RUN apt-get -qq update && apt-get -y upgrade \
 # install kallisto 0.44
 RUN wget -q https://github.com/pachterlab/kallisto/releases/download/v0.44.0/kallisto_linux-v0.44.0.tar.gz -O kallisto-0.44.tar.gz \
     && tar -xvzf kallisto-0.44.tar.gz \
+    && ln -s /usr/src/kallisto_linux-v0.44.0/kallisto /usr/local/bin/ \
     && rm kallisto-0.44.tar.gz
 
 # install howarewestrandedhere
@@ -21,4 +22,4 @@ RUN pip3 install virtualenv  \
     && howarewestrandedhere-venv/bin/pip install --upgrade pip \
     && howarewestrandedhere-venv/bin/pip install how_are_we_stranded_here
 
-ENV PATH=$PATH:/usr/src/kallisto/:/usr/src/howarewestrandedhere-venv/bin/
+ENV PATH=$PATH:/usr/src/kallisto_linux-v0.44.0/:/usr/src/howarewestrandedhere-venv/bin/
