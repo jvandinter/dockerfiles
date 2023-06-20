@@ -1,0 +1,11 @@
+name: howarewestrandedhere
+channels:
+ - bioconda
+ - conda-forge
+dependencies:
+ - python==3.6.0
+ - kallisto==0.44
+ - rseqc
+ - pip 
+ - pip:
+   - how_are_we_stranded_here
